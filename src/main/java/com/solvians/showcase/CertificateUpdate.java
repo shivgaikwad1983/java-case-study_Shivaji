@@ -5,6 +5,7 @@ import java.util.Objects;
 
 /** Mutable holder for one certificate update. */
 public class CertificateUpdate {
+
   private long timestamp;
   private String isin;
   private double bidPrice;
@@ -12,10 +13,8 @@ public class CertificateUpdate {
   private double askPrice;
   private int askSize;
 
-  /** Empty constructor. */
   public CertificateUpdate() {}
 
-  /** Full constructor. */
   public CertificateUpdate(
       long timestamp, String isin, double bidPrice, int bidSize, double askPrice, int askSize) {
     this.timestamp = timestamp;
@@ -26,9 +25,15 @@ public class CertificateUpdate {
     this.askSize = askSize;
   }
 
-  /** Generates a random update. */
+  /**
+   * Builds one certificate update with the current timestamp, a freshly generated ISIN, and random
+   * prices and sizes inside the ranges given in the README.
+   *
+   * @param isinGenerator supplies property 2
+   * @return a fully populated certificate update
+   */
   public static CertificateUpdate random(IsinGenerator isinGenerator) {
-    Objects.requireNonNull(isinGenerator, "isinGenerator");
+    Objects.requireNonNull(isinGenerator, "isinGenerator must not be null");
     return new CertificateUpdate(
         System.currentTimeMillis(),
         isinGenerator.generate(),
@@ -38,73 +43,76 @@ public class CertificateUpdate {
         RandomUtils.nextIntInclusive(FeedConstants.MIN_SIZE, FeedConstants.MAX_ASK_SIZE));
   }
 
+  /**
+   * Random price in [100.00, 200.00] with exactly 2 decimal places. Drawn as a whole number of
+   * cents so that "2 decimal places" holds by construction rather than by rounding.
+   */
   private static double randomPrice() {
     return RandomUtils.nextIntInclusive(
             FeedConstants.MIN_PRICE_CENTS, FeedConstants.MAX_PRICE_CENTS)
         / (double) FeedConstants.CENTS_PER_UNIT;
   }
 
-  /** Timestamp. */
   public long getTimestamp() {
     return timestamp;
   }
 
-  public void setTimestamp(long v) {
-    timestamp = v;
+  public void setTimestamp(long timestamp) {
+    this.timestamp = timestamp;
   }
 
-  /** ISIN. */
   public String getIsin() {
     return isin;
   }
 
-  public void setIsin(String v) {
-    isin = v;
+  public void setIsin(String isin) {
+    this.isin = isin;
   }
 
-  /** Bid price. */
   public double getBidPrice() {
     return bidPrice;
   }
 
-  public void setBidPrice(double v) {
-    bidPrice = v;
+  public void setBidPrice(double bidPrice) {
+    this.bidPrice = bidPrice;
   }
 
-  /** Bid size. */
   public int getBidSize() {
     return bidSize;
   }
 
-  public void setBidSize(int v) {
-    bidSize = v;
+  public void setBidSize(int bidSize) {
+    this.bidSize = bidSize;
   }
 
-  /** Ask price. */
   public double getAskPrice() {
     return askPrice;
   }
 
-  public void setAskPrice(double v) {
-    askPrice = v;
+  public void setAskPrice(double askPrice) {
+    this.askPrice = askPrice;
   }
 
-  /** Ask size. */
   public int getAskSize() {
     return askSize;
   }
 
-  public void setAskSize(int v) {
-    askSize = v;
+  public void setAskSize(int askSize) {
+    this.askSize = askSize;
   }
 
+  /**
+   * Human readable form, for debugging and test failure messages. The feed format is {@link
+   * #toCsv()}.
+   */
   @Override
   public String toString() {
     return "CertificateUpdate{timestamp="
         + timestamp
         + ", isin='"
         + isin
-        + "', bidPrice="
+        + '\''
+        + ", bidPrice="
         + bidPrice
         + ", bidSize="
         + bidSize
@@ -112,6 +120,6 @@ public class CertificateUpdate {
         + askPrice
         + ", askSize="
         + askSize
-        + "}";
+        + '}';
   }
 }

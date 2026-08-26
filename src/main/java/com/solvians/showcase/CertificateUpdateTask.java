@@ -4,31 +4,39 @@ import com.solvians.showcase.format.CertificateUpdateFormatter;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-/**
- * Callable line generator; safe to share because it has no mutable state and randomness is
- * per-thread.
- */
 public class CertificateUpdateTask implements Callable<String> {
+
   private final IsinGenerator isinGenerator;
   private final CertificateUpdateFormatter formatter;
 
-  /** Uses default collaborators. */
+  /** Uses a fresh {@link IsinGenerator} and {@link CertificateUpdateFormatter}. */
   public CertificateUpdateTask() {
     this(new IsinGenerator(), new CertificateUpdateFormatter());
   }
 
-  /** Uses supplied collaborators. */
-  public CertificateUpdateTask(IsinGenerator i, CertificateUpdateFormatter f) {
-    isinGenerator = Objects.requireNonNull(i, "isinGenerator");
-    formatter = Objects.requireNonNull(f, "formatter");
+  /**
+   * @param isinGenerator the ISIN source to use, allowing a stub to be injected in tests
+   * @param formatter renders the update as a feed line
+   */
+  public CertificateUpdateTask(IsinGenerator isinGenerator, CertificateUpdateFormatter formatter) {
+    this.isinGenerator = Objects.requireNonNull(isinGenerator, "isinGenerator must not be null");
+    this.formatter = Objects.requireNonNull(formatter, "formatter must not be null");
   }
 
-  /** Generates one CSV line. */
+  /**
+   * @return one comma separated certificate update line
+   */
+  @Override
   public String call() {
     return formatter.toCsv(nextUpdate());
   }
 
-  /** Generates one typed update. */
+  /**
+   * The same update {@link #call()} renders, but as an object rather than a line. Used by {@link
+   * CertificateUpdateGenerator}, which must return typed updates.
+   *
+   * @return a fully populated certificate update
+   */
   public CertificateUpdate nextUpdate() {
     return CertificateUpdate.random(isinGenerator);
   }

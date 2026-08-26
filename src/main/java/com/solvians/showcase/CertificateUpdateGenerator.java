@@ -5,34 +5,51 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Stream;
 
-/** Concurrent certificate update generator. */
 public class CertificateUpdateGenerator {
-  private final int threads, quotes;
+
+  private final int threads;
+  private final int quotes;
+
+  /**
+   * Deliberately a single shared instance: {@link CertificateUpdateTask} is stateless and thread
+   * safe, so there is no reason to allocate one per task.
+   */
   private final CertificateUpdateTask task = new CertificateUpdateTask();
 
-  /** The shared task is safe because it and its collaborators are stateless. */
   public CertificateUpdateGenerator(int threads, int quotes) {
     this.threads = Validations.requirePositive(threads, "Number of threads");
     this.quotes = Validations.requireNonNegative(quotes, "Number of quotes");
+
+    // Fail here rather than inside generateQuotes(), so an impossible request is rejected
+    // at construction time.
     Validations.multiplyWithoutOverflow(threads, "threads", quotes, "quotes");
   }
 
-  /** Generates exactly threads times quotes fully materialized updates. */
+  /**
+   * Triggers the certificate generations in multiple threads and collects the results.
+   *
+   * @return {@code threads * quotes} fully populated certificate updates
+   */
   public Stream<CertificateUpdate> generateQuotes() {
-    int count = threads * quotes;
+    int total = Validations.multiplyWithoutOverflow(threads, "threads", quotes, "quotes");
+
     ExecutorService pool = Executors.newFixedThreadPool(threads);
     try {
-      List<Callable<CertificateUpdate>> tasks = new ArrayList<>(count);
-      for (int i = 0; i < count; i++) tasks.add(task::nextUpdate);
-      List<Future<CertificateUpdate>> fs = pool.invokeAll(tasks);
-      List<CertificateUpdate> out = new ArrayList<>(count);
-      for (Future<CertificateUpdate> f : fs) out.add(f.get());
-      return out.stream();
+      List<Callable<CertificateUpdate>> tasks = new ArrayList<>(total);
+      for (int i = 0; i < total; i++) {
+        tasks.add(task::nextUpdate);
+      }
+
+      List<CertificateUpdate> updates = new ArrayList<>(total);
+      for (Future<CertificateUpdate> future : pool.invokeAll(tasks)) {
+        updates.add(future.get());
+      }
+      return updates.stream();
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
-      throw new IllegalStateException("Interrupted while generating updates", e);
+      throw new IllegalStateException("Interrupted while generating certificate updates", e);
     } catch (ExecutionException e) {
-      throw new IllegalStateException("Generation failed", e.getCause());
+      throw new IllegalStateException("Failed to generate certificate updates", e.getCause());
     } finally {
       pool.shutdown();
     }
