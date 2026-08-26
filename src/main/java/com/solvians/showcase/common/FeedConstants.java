@@ -1,3 +1,27 @@
 package com.solvians.showcase.common;
-/** Feed constants. */ public final class FeedConstants { private FeedConstants(){throw new AssertionError("No instances");}
-public static final int COUNTRY_CODE_LENGTH=2, NSIN_LENGTH=9, ISIN_BODY_LENGTH=COUNTRY_CODE_LENGTH+NSIN_LENGTH, ISIN_LENGTH=ISIN_BODY_LENGTH+1, CHECK_DIGIT_MODULUS=10, LETTER_A_VALUE=10, CENTS_PER_UNIT=100, MIN_PRICE_CENTS=100*CENTS_PER_UNIT, MAX_PRICE_CENTS=200*CENTS_PER_UNIT, MIN_SIZE=1_000, MAX_BID_SIZE=5_000, MAX_ASK_SIZE=10_000, FIELD_COUNT=6; public static final String UPPERCASE_LETTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZ", ALPHANUMERIC_CHARACTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", FEED_LINE_FORMAT="%d,%s,%.2f,%d,%.2f,%d", FIELD_SEPARATOR=","; }
+
+/** Feed constants. */
+public final class FeedConstants {
+  public static final String UPPERCASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      ALPHANUMERIC_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      FEED_LINE_FORMAT = "%d,%s,%.2f,%d,%.2f,%d",
+      FIELD_SEPARATOR = ",";
+
+  private FeedConstants() {
+    throw new AssertionError("No instances");
+  }
+
+  public static final int COUNTRY_CODE_LENGTH = 2,
+      NSIN_LENGTH = 9,
+      ISIN_BODY_LENGTH = COUNTRY_CODE_LENGTH + NSIN_LENGTH,
+      ISIN_LENGTH = ISIN_BODY_LENGTH + 1,
+      CHECK_DIGIT_MODULUS = 10,
+      LETTER_A_VALUE = 10,
+      CENTS_PER_UNIT = 100,
+      MIN_PRICE_CENTS = 100 * CENTS_PER_UNIT,
+      MAX_PRICE_CENTS = 200 * CENTS_PER_UNIT,
+      MIN_SIZE = 1_000,
+      MAX_BID_SIZE = 5_000,
+      MAX_ASK_SIZE = 10_000,
+      FIELD_COUNT = 6;
+}

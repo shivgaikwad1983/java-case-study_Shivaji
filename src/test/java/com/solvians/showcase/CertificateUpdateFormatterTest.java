@@ -1,1 +1,17 @@
-package com.solvians.showcase; import com.solvians.showcase.format.*; import org.junit.jupiter.api.Test; import static org.junit.jupiter.api.Assertions.*; class CertificateUpdateFormatterTest{@Test void formatsReadmeSample(){assertEquals("1352122280502,DE1234567896,101.23,1000,103.45,1000",new CertificateUpdateFormatter().toCsv(new CertificateUpdate(1352122280502L,"DE1234567896",101.23,1000,103.45,1000)));}}
+package com.solvians.showcase;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import com.solvians.showcase.format.*;
+import org.junit.jupiter.api.Test;
+
+class CertificateUpdateFormatterTest {
+  @Test
+  void formatsReadmeSample() {
+    assertEquals(
+        "1352122280502,DE1234567896,101.23,1000,103.45,1000",
+        new CertificateUpdateFormatter()
+            .toCsv(
+                new CertificateUpdate(1352122280502L, "DE1234567896", 101.23, 1000, 103.45, 1000)));
+  }
+}

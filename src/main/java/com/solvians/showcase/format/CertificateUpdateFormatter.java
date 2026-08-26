@@ -1,2 +1,26 @@
-package com.solvians.showcase.format; import com.solvians.showcase.CertificateUpdate; import com.solvians.showcase.common.FeedConstants; import java.util.*;
-/** Formats certificate updates. */ public class CertificateUpdateFormatter {/** Renders CSV with Locale.ROOT so decimal commas cannot add fields; %d deliberately avoids thousands separators. */public String toCsv(CertificateUpdate update){Objects.requireNonNull(update,"update");Objects.requireNonNull(update.getIsin(),"update.isin");return String.format(Locale.ROOT,FeedConstants.FEED_LINE_FORMAT,update.getTimestamp(),update.getIsin(),update.getBidPrice(),update.getBidSize(),update.getAskPrice(),update.getAskSize());}}
+package com.solvians.showcase.format;
+
+import com.solvians.showcase.CertificateUpdate;
+import com.solvians.showcase.common.FeedConstants;
+import java.util.*;
+
+/** Formats certificate updates. */
+public class CertificateUpdateFormatter {
+  /**
+   * Renders CSV with Locale.ROOT so decimal commas cannot add fields; %d deliberately avoids
+   * thousands separators.
+   */
+  public String toCsv(CertificateUpdate update) {
+    Objects.requireNonNull(update, "update");
+    Objects.requireNonNull(update.getIsin(), "update.isin");
+    return String.format(
+        Locale.ROOT,
+        FeedConstants.FEED_LINE_FORMAT,
+        update.getTimestamp(),
+        update.getIsin(),
+        update.getBidPrice(),
+        update.getBidSize(),
+        update.getAskPrice(),
+        update.getAskSize());
+  }
+}

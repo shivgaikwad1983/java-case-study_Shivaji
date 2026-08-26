@@ -1,2 +1,117 @@
-package com.solvians.showcase; import com.solvians.showcase.common.*; import java.util.Objects;
-/** Mutable holder for one certificate update. */ public class CertificateUpdate {private long timestamp;private String isin;private double bidPrice;private int bidSize;private double askPrice;private int askSize;/** Empty constructor. */public CertificateUpdate(){} /** Full constructor. */public CertificateUpdate(long timestamp,String isin,double bidPrice,int bidSize,double askPrice,int askSize){this.timestamp=timestamp;this.isin=isin;this.bidPrice=bidPrice;this.bidSize=bidSize;this.askPrice=askPrice;this.askSize=askSize;} /** Generates a random update. */public static CertificateUpdate random(IsinGenerator isinGenerator){Objects.requireNonNull(isinGenerator,"isinGenerator");return new CertificateUpdate(System.currentTimeMillis(),isinGenerator.generate(),randomPrice(),RandomUtils.nextIntInclusive(FeedConstants.MIN_SIZE,FeedConstants.MAX_BID_SIZE),randomPrice(),RandomUtils.nextIntInclusive(FeedConstants.MIN_SIZE,FeedConstants.MAX_ASK_SIZE));}private static double randomPrice(){return RandomUtils.nextIntInclusive(FeedConstants.MIN_PRICE_CENTS,FeedConstants.MAX_PRICE_CENTS)/(double)FeedConstants.CENTS_PER_UNIT;} /** Timestamp. */public long getTimestamp(){return timestamp;}public void setTimestamp(long v){timestamp=v;} /** ISIN. */public String getIsin(){return isin;}public void setIsin(String v){isin=v;} /** Bid price. */public double getBidPrice(){return bidPrice;}public void setBidPrice(double v){bidPrice=v;} /** Bid size. */public int getBidSize(){return bidSize;}public void setBidSize(int v){bidSize=v;} /** Ask price. */public double getAskPrice(){return askPrice;}public void setAskPrice(double v){askPrice=v;} /** Ask size. */public int getAskSize(){return askSize;}public void setAskSize(int v){askSize=v;}@Override public String toString(){return "CertificateUpdate{timestamp="+timestamp+", isin='"+isin+"', bidPrice="+bidPrice+", bidSize="+bidSize+", askPrice="+askPrice+", askSize="+askSize+"}";}}
+package com.solvians.showcase;
+
+import com.solvians.showcase.common.*;
+import java.util.Objects;
+
+/** Mutable holder for one certificate update. */
+public class CertificateUpdate {
+  private long timestamp;
+  private String isin;
+  private double bidPrice;
+  private int bidSize;
+  private double askPrice;
+  private int askSize;
+
+  /** Empty constructor. */
+  public CertificateUpdate() {}
+
+  /** Full constructor. */
+  public CertificateUpdate(
+      long timestamp, String isin, double bidPrice, int bidSize, double askPrice, int askSize) {
+    this.timestamp = timestamp;
+    this.isin = isin;
+    this.bidPrice = bidPrice;
+    this.bidSize = bidSize;
+    this.askPrice = askPrice;
+    this.askSize = askSize;
+  }
+
+  /** Generates a random update. */
+  public static CertificateUpdate random(IsinGenerator isinGenerator) {
+    Objects.requireNonNull(isinGenerator, "isinGenerator");
+    return new CertificateUpdate(
+        System.currentTimeMillis(),
+        isinGenerator.generate(),
+        randomPrice(),
+        RandomUtils.nextIntInclusive(FeedConstants.MIN_SIZE, FeedConstants.MAX_BID_SIZE),
+        randomPrice(),
+        RandomUtils.nextIntInclusive(FeedConstants.MIN_SIZE, FeedConstants.MAX_ASK_SIZE));
+  }
+
+  private static double randomPrice() {
+    return RandomUtils.nextIntInclusive(
+            FeedConstants.MIN_PRICE_CENTS, FeedConstants.MAX_PRICE_CENTS)
+        / (double) FeedConstants.CENTS_PER_UNIT;
+  }
+
+  /** Timestamp. */
+  public long getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(long v) {
+    timestamp = v;
+  }
+
+  /** ISIN. */
+  public String getIsin() {
+    return isin;
+  }
+
+  public void setIsin(String v) {
+    isin = v;
+  }
+
+  /** Bid price. */
+  public double getBidPrice() {
+    return bidPrice;
+  }
+
+  public void setBidPrice(double v) {
+    bidPrice = v;
+  }
+
+  /** Bid size. */
+  public int getBidSize() {
+    return bidSize;
+  }
+
+  public void setBidSize(int v) {
+    bidSize = v;
+  }
+
+  /** Ask price. */
+  public double getAskPrice() {
+    return askPrice;
+  }
+
+  public void setAskPrice(double v) {
+    askPrice = v;
+  }
+
+  /** Ask size. */
+  public int getAskSize() {
+    return askSize;
+  }
+
+  public void setAskSize(int v) {
+    askSize = v;
+  }
+
+  @Override
+  public String toString() {
+    return "CertificateUpdate{timestamp="
+        + timestamp
+        + ", isin='"
+        + isin
+        + "', bidPrice="
+        + bidPrice
+        + ", bidSize="
+        + bidSize
+        + ", askPrice="
+        + askPrice
+        + ", askSize="
+        + askSize
+        + "}";
+  }
+}
