@@ -1,8 +1,16 @@
 package com.solvians.showcase;
 
+import static com.solvians.showcase.TestFixtures.ISIN;
+import static com.solvians.showcase.TestFixtures.MANY;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.solvians.showcase.common.FeedConstants;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class IsinGeneratorTest {
 

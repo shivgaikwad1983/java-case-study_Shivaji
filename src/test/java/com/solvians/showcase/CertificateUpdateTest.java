@@ -1,7 +1,9 @@
 package com.solvians.showcase;
 
+import static com.solvians.showcase.TestFixtures.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.solvians.showcase.common.FeedConstants;
 import org.junit.jupiter.api.Test;
 
 class CertificateUpdateTest {

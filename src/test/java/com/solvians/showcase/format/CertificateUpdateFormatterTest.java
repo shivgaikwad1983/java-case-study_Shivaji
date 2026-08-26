@@ -1,9 +1,13 @@
-package com.solvians.showcase;
+package com.solvians.showcase.format;
 
+import static com.solvians.showcase.TestFixtures.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.solvians.showcase.format.*;
+import com.solvians.showcase.CertificateUpdate;
+import com.solvians.showcase.IsinGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class CertificateUpdateFormatterTest {
 

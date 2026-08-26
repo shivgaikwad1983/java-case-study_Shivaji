@@ -1,8 +1,19 @@
 package com.solvians.showcase;
 
+import static com.solvians.showcase.TestFixtures.FEED_LINE;
+import static com.solvians.showcase.TestFixtures.MANY;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.solvians.showcase.common.FeedConstants;
+import com.solvians.showcase.format.CertificateUpdateFormatter;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 class CertificateUpdateTaskTest {
 
