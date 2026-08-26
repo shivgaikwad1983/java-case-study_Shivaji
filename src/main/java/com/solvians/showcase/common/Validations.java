@@ -1,0 +1,5 @@
+package com.solvians.showcase.common;
+/** Argument validation helpers. */ public final class Validations {private Validations(){throw new AssertionError("No instances");}
+/** Requires a positive value. */ public static int requirePositive(int value,String name){if(value<=0)throw new IllegalArgumentException(name+" must be positive, but was: "+value);return value;}
+/** Requires a non-negative value. */ public static int requireNonNegative(int value,String name){if(value<0)throw new IllegalArgumentException(name+" must not be negative, but was: "+value);return value;}
+/** Multiplies without integer overflow. */ public static int multiplyWithoutOverflow(int first,String firstName,int second,String secondName){try{return Math.multiplyExact(first,second);}catch(ArithmeticException e){throw new IllegalArgumentException(firstName+" ("+first+") multiplied by "+secondName+" ("+second+") exceeds the maximum integer value",e);}}}

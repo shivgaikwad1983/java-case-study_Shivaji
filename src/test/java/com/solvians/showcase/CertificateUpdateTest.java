@@ -1,0 +1,1 @@
+package com.solvians.showcase; import org.junit.jupiter.api.Test; import static org.junit.jupiter.api.Assertions.*; class CertificateUpdateTest{@Test void randomIsPopulated(){CertificateUpdate c=CertificateUpdate.random(new IsinGenerator());assertTrue(IsinGenerator.isValid(c.getIsin()));assertTrue(c.getTimestamp()>0);}}
